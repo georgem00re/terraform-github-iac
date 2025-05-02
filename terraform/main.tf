@@ -15,9 +15,14 @@ provider "github" {
 }
 
 module "github_repository" {
-  source      = "./modules/github_repository"
-  name        = var.REPOSITORY_NAME
-  description = var.REPOSITORY_DESCRIPTION
+  source                      = "./modules/github_repository"
+  name                        = var.REPOSITORY_NAME
+  description                 = var.REPOSITORY_DESCRIPTION
+  allow_merge_commit          = false
+  allow_squash_merge          = true
+  has_issues                  = true
+  squash_merge_commit_message = "BLANK"
+  squash_merge_commit_title   = "PR_TITLE"
 
   // This creates a 'master' branch and an empty README.md file.
   auto_init = true
@@ -30,4 +35,10 @@ module "github_repository_file" {
   commit_message  = "Create an empty .gitignore file"
   file            = ".gitignore"
   content         = "" # Empty file.
+}
+
+module "github_branch_protection" {
+  source          = "./modules/github_branch_protection"
+  repository_name = module.github_repository.name
+  branch_name     = "master"
 }
