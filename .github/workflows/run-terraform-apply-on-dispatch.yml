@@ -1,4 +1,4 @@
-name: run-tsc-on-pull-request
+name: run-terraform-apply-on-dispatch
 on:
   workflow_dispatch:
     inputs:
