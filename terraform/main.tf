@@ -2,6 +2,7 @@
 variable "GH_PERSONAL_ACCESS_TOKEN" {}
 variable "GH_OWNER_NAME" {}
 variable "REPOSITORY_NAME" {}
+variable "REPOSITORY_DESCRIPTION" {}
 
 terraform {
   required_version = ">= 1.4.0"
@@ -13,6 +14,8 @@ provider "github" {
   owner = var.GH_OWNER_NAME
 }
 
-resource "github_repository" "example" {
+module "github_repository" {
+  source = "./modules/github_repository"
   name = var.REPOSITORY_NAME
+  description = var.REPOSITORY_DESCRIPTION
 }
