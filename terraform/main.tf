@@ -18,4 +18,16 @@ module "github_repository" {
   source = "./modules/github_repository"
   name = var.REPOSITORY_NAME
   description = var.REPOSITORY_DESCRIPTION
+
+  // This creates a 'master' branch and an empty README.md file.
+  auto_init = true
+}
+
+module "github_repository_file" {
+  source = "./modules/github_repository_file"
+  branch_name = "master"
+  repository_name = module.github_repository.name
+  commit_message = "Create an empty .gitignore file"
+  file = ".gitignore"
+  content = "" # Empty file.
 }

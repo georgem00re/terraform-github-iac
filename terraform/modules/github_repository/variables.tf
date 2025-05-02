@@ -6,3 +6,7 @@ variable "name" {
 variable "description" {
   type = string
 }
+
+variable "auto_init" {
+  type = bool
+}
