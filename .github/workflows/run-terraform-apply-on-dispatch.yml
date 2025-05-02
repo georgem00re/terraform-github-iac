@@ -1,0 +1,22 @@
+name: run-tsc-on-pull-request
+on:
+  workflow_dispatch:
+    inputs:
+      repository_name:
+        description: 'The name of the repository to create'
+        required: true
+jobs:
+  run-terraform-apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.3.0
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+      - run: terraform init
+        working-directory: ./terraform
+      - run: terraform apply -auto-approve
+        env:
+          TF_VAR_GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          TF_VAR_GH_OWNER_NAME: ${{ github.repository_owner }}
+          TF_VAR_REPOSITORY_NAME: ${{ github.event.inputs.repository_name }}
+        working-directory: ./terraform
