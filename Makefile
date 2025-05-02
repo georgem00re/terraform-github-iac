@@ -1,9 +1,11 @@
 include .env
 
+run-terraform-init:
+	terraform -chdir=terraform init
+
 run-terraform-apply:
 	TF_VAR_GH_PERSONAL_ACCESS_TOKEN=$(GH_PERSONAL_ACCESS_TOKEN) \
 	TF_VAR_GH_OWNER_NAME=$(GH_OWNER_NAME) \
-    TF_VAR_REPOSITORY_NAME=$(REPOSITORY_NAME) \
     terraform -chdir=terraform apply
 
 delete-terraform-state:
